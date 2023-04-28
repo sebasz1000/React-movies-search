@@ -5,6 +5,7 @@ export const useMovies = () => {
   const API_KEY = '4287ad07'
   const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=Avengers`
   const movies = responseMovies.Search
+  //converts(maps) fetched data to properly manage on front
   const mappedMovies = movies?.map(movie => {
     return {
       id: movie.imdbID,
