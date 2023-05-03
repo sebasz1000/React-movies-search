@@ -4,13 +4,17 @@ export const useSearch = () => {
   const [query, setQuery] = useState('')
   const [error, setError] = useState(null)
   const isFirstInput = useRef(true)
+  const lastQuery = useRef(query)
 
 
   const handleSubmit = (e, callback) => {
     e.preventDefault()
     if (query === "")
       return
-      callback()
+    if(query === lastQuery.current)
+      return
+    lastQuery.current = query
+    callback(query)
   }
   const handleChange = ({ target }) => {
     const newQuery = target.value
@@ -41,5 +45,5 @@ export const useSearch = () => {
     error,
     handleSubmit,
     handleChange
-  }
+    }
 }

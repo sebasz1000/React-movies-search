@@ -19,6 +19,7 @@ main{
 form{
   display: flex;
   padding: 1em 0;
+ 
 }
 h3{
   margin-bottom: 0 !important;
@@ -41,4 +42,16 @@ p{
 
 .list-item img{
   border-radius:8px;
+}
+
+
+.d-flex{
+  display: flex;
+}
+.flex-row{
+  flex-direction: row;
+}
+
+.flex-column{
+  flex-direction: column;
 }
