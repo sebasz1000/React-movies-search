@@ -1,21 +1,33 @@
-import responseMovies from '../mocks/results.json'
-import noResults from '../mocks/no-results.json'
-import {useRef} from 'react'
-export const useMovies = () => {
-  const API_KEY = '4287ad07'
-  const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=Avengers`
-  const movies = responseMovies.Search
-  //converts(maps) fetched data to properly manage on front
-  const mappedMovies = movies?.map(movie => {
-    return {
-      id: movie.imdbID,
-      title: movie.Title,
-      year: movie.Year,
-      poster: movie.Poster
-    }
-  })
+//import responseMovies from '../mocks/results.json'
+import { useState } from 'react'
+import { fetchMovies } from '../services/fetch-movies'
+
+export const useMovies = ( { query = '' } ) => {
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [movieError, setError] = useState(null)
+
+  
+  const getMovies = () => {
+    console.log('geting movies...')  
+    setLoading(true)
+    setError(null)
+      fetchMovies(query)
+        .then( (data) => {
+          setMovies(data)
+        })
+        .catch( e => {
+          setError(e.message)
+        })
+        .finally( () => {
+          setLoading(false)
+        })
+  }
 
   return {
-    movies: mappedMovies,
+    movies,
+    getMovies,
+    loading,
+     movieError
   }
 }

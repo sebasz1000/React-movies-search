@@ -1,12 +1,12 @@
 function List({ items }) {
   return (
-    <ul>
+    <ul className="list">
       {
         items.map(item => {
-          return <li key={item.id}>
+          return <li className="list-item" key={item.id}>
+            <img src={item.poster} alt={item.title} />
             <h3> {item.title} </h3>
             <p> {item.year}</p>
-            <img src={item.poster} alt={item.title} />
           </li>
         })
       }

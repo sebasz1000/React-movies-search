@@ -1,8 +1,7 @@
 import './App.css'
 
-import { useMovies } from './hooks/useMovies'
-import { Movies } from './components/Movies'
-import { useEffect, useState, useRef } from 'react'
+import { useMovies, useSearch } from './hooks'
+import { Loader, Movies } from './components'
 /*
   MOVIES LIST
 
@@ -18,61 +17,19 @@ import { useEffect, useState, useRef } from 'react'
 
 */
 
-const useSearch = () => {
-  const [query, setQuery] = useState('')
-  const [error, setError] = useState(null)
-  const isFirstInput = useRef(true)
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (query === "")
-      return
-  }
-  const handleChange = ({ target }) => {
-    const newQuery = target.value
-    setQuery(newQuery)
-  }
-
-  useEffect(() => {
-    //avoids input validation before user start searching for first time!
-    if (isFirstInput.current) {
-      isFirstInput.current = query === ''
-      return
-    }
-
-    if (query.length < 1) {
-      setError('Cannot search a empty movie')
-      return
-    }
-    if (query.startsWith('2')) {
-      setError('Cannot have 2 at start')
-      return
-    }
-    setError(null)
-  }, [query])
-
-
-  return {
-    query,
-    error,
-    handleSubmit,
-    handleChange
-  }
-}
 
 function App() {
 
 
-  const { movies } = useMovies()
   const { query, error, handleSubmit, handleChange } = useSearch()
+  const { movies, getMovies, movieError, loading } = useMovies({ query })
 
 
   return (
     <div className="page">
       <header>
         <h1>Buscador de Peliculas</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e, getMovies)}>
           <input type="text"
             placeholder="Parasite, Titanic, Soul..."
             name='query'
@@ -90,11 +47,14 @@ function App() {
             ? <p>{error}</p>
             : null
         }
-        {<Movies movies={movies} />}
+        {
+          loading
+            ? <Loader />
+            : <Movies movies={movies} />
+        }
       </main>
     </div>
   )
 }
 
 export default App
-
