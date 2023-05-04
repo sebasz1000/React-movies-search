@@ -6,7 +6,7 @@ function List({ items }) {
           return <li className="list-item" key={item.id}>
             <img src={item.poster} alt={item.title} />
             <h3> {item.title} </h3>
-            <p> {item.year}</p>
+            <p className="text-muted"> {item.year}</p>
           </li>
         })
       }

@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback} from 'react'
+import debounce from 'just-debounce-it'
 
 export const useSearch = () => {
   const [query, setQuery] = useState('')
@@ -6,6 +7,10 @@ export const useSearch = () => {
   const isFirstInput = useRef(true)
   const lastQuery = useRef(query)
 
+ 
+  const debouncedGetMovies = useCallback( 
+    debounce((query, callback) =>  callback(query), 500)
+  , [])
 
   const handleSubmit = (e, callback) => {
     e.preventDefault()
@@ -16,9 +21,14 @@ export const useSearch = () => {
     lastQuery.current = query
     callback(query)
   }
-  const handleChange = ({ target }) => {
-    const newQuery = target.value
+
+  const handleChange = (e, callback) => {
+    const newQuery = e.target.value
+
     setQuery(newQuery)
+
+    debouncedGetMovies(newQuery, callback)
+
   }
 
   useEffect(() => {

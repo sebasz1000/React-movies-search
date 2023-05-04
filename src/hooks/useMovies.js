@@ -8,8 +8,9 @@ export const useMovies = ( { query = '', sort = false } ) => {
   const [movieError, setError] = useState(null)
 
   
-  const getMovies = useMemo( function() {
-    return ( query ) => {
+  const getMovies = useCallback(( query ) => {
+      if(query === "")
+        return
       console.log('geting movies...')  
       setLoading(true)
       setError(null)
@@ -24,11 +25,7 @@ export const useMovies = ( { query = '', sort = false } ) => {
             setLoading(false)
           })
     }
-  }, [])
-
-  useEffect( () => {
-    console.log('get movies fucking')
-  }, [getMovies])
+  , [])
    
   const sortedMovies = useMemo(
     () => {

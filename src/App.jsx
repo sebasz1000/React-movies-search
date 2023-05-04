@@ -32,6 +32,10 @@ function App() {
   return (
     <div className="page">
       <header>
+        <img src="/public/movies2.svg"
+          width="150px"
+          id="app-logo"
+          alt="Movies Search logo" />
         <h1>Buscador de Peliculas</h1>
         <form onSubmit={(e) => handleSubmit(e, getMovies)}
           className='flex-column'>
@@ -41,13 +45,13 @@ function App() {
               name='query'
               value={query}
               style={{ border: error && '1px red solid' }}
-              onChange={handleChange} />
-            <button type='submit' >
+              onChange={(e) => handleChange(e, getMovies)} />
+            <button type='submit' id="search-btn">
               SEARCH
             </button>
           </div>
-          <div>
-            <label htmlFor="filter">
+          <div className='filters-box'>
+            <label htmlFor="filter" className='pr-3'>
               Sort by title
             </label>
             <input type="checkbox"
