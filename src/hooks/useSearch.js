@@ -39,7 +39,7 @@ export const useSearch = () => {
     }
 
     if (query.length < 1) {
-      setError('Cannot search a empty movie')
+      setError('Cannot search an empty movie')
       return
     }
     if (query.startsWith('2')) {

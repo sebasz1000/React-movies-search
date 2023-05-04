@@ -74,9 +74,14 @@ input{
 }
 
 #search-btn{
-  background-color:  #e8c216;
+  background-color:  #ccab17;
   color: black;
   font-weight: bold;
+  align-self: start;
+}
+#search-btn:hover{
+  background-color:  #ffd722;
+  
 }
 .filters-box{
   display: flex;
@@ -91,4 +96,14 @@ input{
 
 .text-muted{
   color: #5b5b5b;
+}
+
+.input-error{
+  color: #ff4e4e;
+  display: flex;
+  justify-content: center;
+}
+
+.input-text-container{
+  height: 58px;
 }
